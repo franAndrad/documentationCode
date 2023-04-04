@@ -1,10 +1,14 @@
-import Titulo from "./components/Titulo";
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <Titulo></Titulo>
+    <div className='container'>
+      <header >
       </header>
+      <body>
+        <h1 className="display-4 text-center">Documentar Conocmimientos</h1>
+        <hr />
+      </body>
     </div>
   );
 }
