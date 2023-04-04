@@ -1,0 +1,355 @@
+Herramientas nescesarias para utilizacion de aplicaciones con react:
+
+ 1 - Instalar React Developer Tools (chrome) [https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi]
+ 2 - Plugin VsCode 
+	*React code snippets: Ayuda al autocompletado de react
+------------------------------------------------------------------------------------------------------------
+
+React: Biblioteca de javascript que nos permite crear JSX(Javascript Xtended) el cual se tiene que compilar para obtener Javascript,Html,Css que entiende nuestro ordenador.
+
+
+INSTALACION
+1 - Instalar Node.js [https://nodejs.org/en]
+2 - Crear un proyecto react con npx-create-react-app [name]
+
+INICIALIZACION
+3 - Para iniciar el proyecto en la terminal ingresamos $npm start
+4 - En la carpeta node_modules se descargan las dependencias(librerias) por lo que nos aseguramos que en gitignore, de esta forma no subimos la carpeta. Si ya estaria cargada en un repositorio como github al descargarlo se puede reconstruir debido a que la informacion esta en el package.json(dependencias, depuracion, testing, informacion) y lo hacemos con el comando $npm install
+
+Nota: en package.json en la parte de Debug, el $npm eject publica los archivos ocultos y no se puede deshacer el cambio
+
+Nota: Para instalar librerias con npm install [name libreria]
+	Ejemplos:
+
+	Instalacion:	
+		npm install react-bootstrap bootstrap
+	Para usarlo la importamos en App.js:
+		iimport '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+
+----------------------------------------------------------
+5 - Los archivos importantes para empezar el proyecto son
+----------------------------------------------------------
+	name/
+		node_modules/  
+		public/
+		src/
+			App.js
+			index.js
+		.gitignore
+		package-lock.json
+		package.json
+		README.md	
+----------------------------------------------------------------
+en App.js dejamos la estructura basica:
+
+	function App() {
+  		return (
+    			<div className="App">
+				<p>Aqui empezamos a escribir el codigo</p>
+    			</div>
+  		);
+	}
+
+	export default App;
+----------------------------------------------------------------
+ en Index.js dejamos la estructura basica:
+
+	import React from 'react';
+	import ReactDOM from 'react-dom/client';
+	import App from './App';
+
+	const root = ReactDOM.createRoot(document.getElementById('root'));
+	root.render(
+	  	<React.StrictMode> //Si vemos que las cosas se hacen dos veces lo borramos
+    			<App />
+  		</React.StrictMode>
+	);
+-----------------------------------------------------------------------
+
+
+COMPONENES 
+
+CREAR:
+6 - Componentes: Todos empiezan con letra mayuscula y retornan un valor. Se utilizan para cargar porciones de Js,html,css y poder reutilizarlos. Se escriben con etiquietas como html pero empiezan con mayuscula.
+
+	*Funciones: Lo agregamos vscode teniendo la herramienta mencionada y tippeando rsc
+	*Clases: Lo agregamos vscode teniendo la herramienta mencionada y tippeando rcc
+
+Para crearlos creamos una carpeta en rsc
+	src/
+		components/  <- Aqui
+		App.js
+		index.js
+
+-------------------------------------------
+Ejemplo componente funcional:
+--------------------------------------------
+ 		/components
+			Titulo.js
+
+en Titulo.js escribimos
+
+	import React from 'react';
+	const Titulo = () => {
+   		return (
+      		<div>
+         			<h1>Ejemplo Componente</h1>
+         			<hr />
+      		</div>
+   		);
+	};
+	export default Titulo;
+
+ahora en App.js lo importamos y agregamos
+
+	import Titulo from "./components/Titulo";	
+	function App() {
+  		return (
+    			<div className="App">
+      			<header className="App-header">
+        				<Titulo></Titulo>
+      			</header>
+    			</div>
+  		);
+	}
+	export default App;
+-------------------------------------------------
+
+
+STATE: Sirve para que el renderize solo la variable que estemos modificando
+
+Crear: Para crear un state lo que tenemos que hacer es importar state y crearlo como una variable const donde primero ponemos el nombre del state(varState), despues la funcion que lo va a llamar(setVarState) y el tipo de variable que vamos a usar entre los parentesis (useState(tipo)).
+
+	import React , {useState} from "react";
+
+	const Component = () =>{
+		const[varState,setVarState]=useState([])
+	}
+
+----------------------------------------------------
+
+PROPS: Se usan para mandar datos(variables,funciones,etc) a componentes hijos, en este caso enviamos el valor de la variable var al componente hijo
+	
+	<Componente Padre nombreProps={var} ></Componente Padre>
+
+En el componente hijo
+	
+	function ComponenteHijo(props) {
+  		return (
+    			<div className="App">
+        				<p>props.nombreProps</p>
+    			</div>
+  		);
+	}
+	
+--------------------------------------------------
+
+HOOK useEffect(): Ciclo de vida para un componente
+
+	Montaje: Cuando se inicia la app
+	Actualizacion: Cuando le hacemos modificaciones
+	Desmontaje: Cuando cerramos la app
+
+	useEffect(()=>{
+		//Cuando el componente sea montado o actualizado se ejecuta el codigo
+	},[state1,state2])
+
+	Si los corchetes estan vacios no le presta la atencion a ninguna actualizacion, en el ejemplo tiene dos por lo que solo le prestaria atencion a esos dos en la actualizacion. Si no tiene directamente los corchetes los realiza en el montaje.
+
+
+-------------------------------------------
+LOCAL STORAGE:
+
+ Para guardar algo en el local storage usamos setItem donde nos permite poner el nombre con el que lo queremos guardar y el formato, el cual lo conevertimos a JSON con JSON.stringify()
+
+	localStorage.setItem('key', JSON.stringify(arregloTareas))
+
+Para obtener algo del local storage usamos JSON.pase() para convertirlo al tipo de variable, con getItem() obtenemos el valor y si no llega nada con el || [] ponemos que me devuelva un arreglo vacio, si se quisiera otro tipo de variable lo modificamos
+
+	let varLocalStorage = JSON.parse(localStorage.getItem('listaTareas')) || [];
+ 
+
+
+-------------------------------------------------
+API: Las API nos devuelven una promesa, por lo que tenemos que esperar a que llegue su respuesta para hacer esto usamos el async en la funcion mas cercana para que sea asyncronica y el await en la variable para que espere su respuesta. 
+Para hacer una peticion a la api utilizazmos el fetch() y su informacion va a estar en el body peron con formato JSON de la respuesta, para ellos usamos un .json() para convertirlo
+
+	Para consultar una api lo podemos hacer desde el useEffect()
+
+Ejemplo:
+
+	useEffect(()=>{
+		consultarAPI();
+	},[])
+	
+	const consultarAPI = async () =>{
+		const respuesta = await fetch('linkAPI')
+		const dato = await respuesta.json() 
+	} 
+
+
+---------------------------------------------------
+REACT ROUTER [https://reactrouter.com/en/main/start/tutorial]: Lo utilizamos para manejar rutas y simular como si tuvieramos varias paginas. En realidad cada vez que se carga una ruta lo que estamos haciendo es cargar un componente
+
+	Para instalarlo usamos:
+
+	$npm install react-router-dom localforage match-sorter sort-by 
+
+
+	Como vamos a simular paginas tenemos que crear los componentes, para poder tenerlos mejor administrados podemos seguir la siguiente estructura de archivos
+
+	/src
+		/components
+			/views 			<- Paginas como componentes
+				Pag1.js
+				Pag2.js
+				Error.js
+			/common 			<- Componentes que se comparten (Nav, Footer)
+				Footer.js
+				Menu.js
+
+	En App.js tenemos que modificar las rutas, donde BrowserRouter es el administrador de todas las rutas, Routes el listado de rutas y Route la ruta propiamente. Para poder poner el link o ruta en Route utilizamos el path, y para que sea exactamente la ruta que deseamos le agregamos el exact; si queremos enviar un parametro agregamos un /:id. 
+Para elegir el componente que queremos renderizar en esa ruta utilizamos el element={}. Ahora para que una ruta sea diferente a las definidas usamos path='*'.
+	Entre el BroserRouter y Routes podemos poner todos los componentes que queremos que se cargen en todas las paginas.
+
+Ejemplo:
+
+	import {BrowserRouter, Routes, Route} from 'react-router-dom'
+	function App() {
+  		return (
+    			<div className="App">
+				<BrowserRouter>
+					<Menu></Menu>
+					<Router>
+						<Route excat path='/' element={<Page1></Page1>}></Route>
+						<Route excat path='/page2' element={<Page2></Page2>}></Route>
+						<Route excat path='/page2/:id' element={<Page2></Page2>}></Route>									<Route path='*' element={<Error></Error>}></Route>
+					</Router>
+					<Footer></Footer>
+				</BrowserRouter>
+    			</div>
+  		);
+	}
+
+	export default App;
+
+
+Si queremos movernos en las rutas tenemos que usar el componente Navlink con el atributo to='/ruta', este lo podemos ingresar en el Menu.js para el navbar. Si al to le agrego el atributo end obligo a que la ruta sea exactamente igual.
+
+	<Navlink to='/' classname='nav-item nav-link'>Inicio</Navlink>
+	<Navlink end to='/page2' classname='nav-item nav-link'>Inicio</Navlink>
+
+Tambien podemos usar el atributo as={Component} con este podemos hacer que un compontente se comoporte como otro componente
+
+
+USENAVIGATE: Se usa para poder redireccionarnos desde cualquier lugar, en este ejemplo si en algun lugar usamos navegacion('/ruta') nos redirige a la ruta deseada
+
+	import {useNavigate} from 'react-router-dom'
+
+	function Componente(props) {
+		
+		const navegacion = useNavigate();
+		navegacion ('/');
+	}
+
+	
+
+
+----------------------------------------------------
+JSON SERVER: Nos permite simular una API de forma local [https://github.com/typicode/json-server]
+
+	Para instalarlo usamos el siguiente comando, observe que este se instala de forma global por lo que si ya lo tiene instalado en su computadora no hace falta que lo vuelva a instalar.
+
+	$npm install -g json-server
+
+	Para poder utilizarlo tenemos que crear un archivo db.json en la carpeta src/ y debe contener la estructura del dato por ejemplo:
+
+	{
+		"cosas":[
+			{
+				"nombre":"cosa1",
+				"categoria": "cat",
+				"id":1
+			},
+			{
+				"nombre":"cosa2",
+				"categoria": "cat",
+				"id":2
+			},	
+		]
+	}
+	
+	Para ejecutarlo usamos el siguiente comando, si no tenemos cargado el db.json anterior nos va a crear uno de ejemplo automaticamente
+
+	$json-server --watch bd.json --port3001
+
+	Si nos tira error, abrimos el powershell con permiso de administrador para habilitar la restriccion para la ejecucion de script
+
+	$set -ExcecutionPolicy Unrestricted
+	
+	Si nos pide que acepectos los cambios, los aceptamos
+	
+
+PETICIONES:
+
+	Para hacer peticiones usamos el try catch por que trabajamos con promesas
+
+	try{
+		//Aqui ponemos las peticiones
+	}catch{
+		console.log(error)
+	}
+
+
+	GET(Obtener):
+		const respuestaJson = await fetch('link');
+		const respuesta = await respuesta.json();
+		if(respuesta.status==='200'){//msj} //Con esto podemos mostrar un mensaje 
+		console.log(respuesta)
+
+	POST(Crear):
+		const respuesta = await fetch('link',{
+			method: 'POST',
+			headers: {
+				"Content-Type":"application/json"
+			},
+			body: JSON.stringify('El objeto que queremos cargar')
+		});
+		if(respuesta.status==='201'){//msj} //Con esto podemos mostrar un mensaje 
+		console.log(respuesta)
+
+	DELETE(Eliminar):
+		const respuesta = await fetch('link/' + id ,{
+			method: 'DELETE',
+			headers: {
+				"Content-Type":"application/json"
+			},
+			body: JSON.stringify('El objeto que queremos cargar')
+		});
+		if(respuesta.status==='200'){//msj} //Con esto podemos mostrar un mensaje 
+		console.log(respuesta)
+
+	
+	Para actualizar podemos usar el hook useParams, este me devuelve como objeto los parametros en la url.
+
+	const{id} = useParams();
+	console.log(id)
+
+-----------------	
+Falta Hacer el Actualizar
+---------------
+
+---------------------------------------------------
+CODIGOS: (Buscar y mejorar)
+	200 - Todo salio correctamente
+
+----------------------------------------------------
+PUBLICAR NETFLIFY:
+	
+Asegurarnos que en build command este:
+
+		npm run build
+
+	Si no deploya agregamos
+
+		CI= npm run build
