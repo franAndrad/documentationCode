@@ -19,8 +19,7 @@ const Document = () => {
       <div className='container my-5'>
          {
             parrafos.map((linea)=>
-            (
-            <Linea key={linea.id} linea={linea} />))
+            (<Linea key={linea.id} linea={linea} />))
          }
       </div>
    );

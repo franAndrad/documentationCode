@@ -1,11 +1,13 @@
-import React from 'react';
 import CodeEditor from '../others/CodeEditor';
 
 const Linea = (props) => {
+
+console.log(props.linea.linea.isCode)
    return (
       <div>
          <p className='my-3'>{props.linea.linea}</p>
-         <CodeEditor code={props.linea.code}/>         
+         {props.linea.isCode ? <CodeEditor code={props.linea.code} /> : '' }
+                 
       </div>
    );
 };
