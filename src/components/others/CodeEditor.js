@@ -5,7 +5,7 @@ import { githubDark } from '@uiw/codemirror-theme-github';
 
 const CodeEditor = (props) => {
    const onChange = React.useCallback((value, viewUpdate) => {
-      console.log('value:', value);
+      props.setCode(value.replace(/\n/g, '\n').replace(/\t/g, '\t'))
    }, []);
 
    return (

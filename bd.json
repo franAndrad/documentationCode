@@ -2,25 +2,14 @@
   "tema": {
     "titulo": [
       {
-        "nombre": "Tit12323",
+        "nombre": "React",
         "subtitulo": [
           {
-            "nombre": "Sub1",
+            "nombre": "Instalacion",
             "parrafos": [
               {
-                "linea": "Herramientas nescesarias para utilizacion de aplicaciones con react",
-                "isCode": true,
-                "code": "console.log(1)\nconsole.log(2)\nconsole.log(3)\t()=>{console.log('hola)}"
-              },
-              {
-                "linea": "ajsbdjahdsbjahbdjad",
-                "isCode": false,
-                "code": ""
-              },
-              {
-                "linea": "Con jQuery, puede usar el jQuery.isEmptyObject() método para determinar si un objeto está vacío. El siguiente ejemplo de código demuestra su uso:",
-                "isCode": false,
-                "code": ""
+                "linea": "Esta funcion es para saludar",
+                "code": "function saludar(nombre) {\n  console.log('Hola', nombre)\n}"
               }
             ]
           }

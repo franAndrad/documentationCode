@@ -4,8 +4,9 @@ import CodeEditor from '../../others/CodeEditor';
 const Parrafos = (props) => {
    return (
       <div>
-         <p>{props.parrafos.linea}</p>
-         {props.parrafos.isCode ? <CodeEditor code={props.parrafos.code}/> : ''}
+         
+         {props.parrafos.linea !== '' ? <p className='my-3'>{props.parrafos.linea}</p> : ''}
+         {props.parrafos.code !== '' ? <CodeEditor code={props.parrafos.code} className='my-3' /> : ''}
       </div>
    );
 };
