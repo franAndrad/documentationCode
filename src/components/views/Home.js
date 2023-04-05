@@ -2,12 +2,14 @@ import React from 'react';
 import CodeEditor from '../others/CodeEditor';
 
 const Home = () => {
+
    let bienvenida = `
+
    ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ 
    ░░░░░░░░░┌┬┐░░░░┌───────────────────────────┐
    ░░░░░┐┌──┘▐▐─┐──┤Empieza a documentar ahora!│ 
    ░░░░░└┤┌┬┐┌┬─┘░░└───────────────────────────┘
-   ══════╧╧╧╧╧╧═══════════════════════════════════
+   ══════╧╧╧╧╧╧══════════════════════════════════
    `
    return (
       <div className='container my-5'>
@@ -17,6 +19,7 @@ const Home = () => {
             <CodeEditor code={bienvenida} />
          </div>        
       </div>
+
    );
 };
 
