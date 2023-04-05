@@ -1,21 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import Titulos from './Docs/Titulos';
+import Navigate from './Docs/Navigate';
 import CodeEditor from '../others/CodeEditor';
 import { Form, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+
+import './Document.css';
 
 const Document = () => {
 
    const [temas , setTemas] = useState({});
    const [text, setText] = useState('');
    const [code, setCode] = useState('');
-
+   const [subtitulos, setSubtitulos] = useState([])
    const navegacion = useNavigate();
 
    useEffect(()=>{
       consultarTemas();
    },[])
 
+   
    const consultarTemas = async () => {
       const respuestaJson = await fetch('http://localhost:4000/tema');
       const respuesta = await respuestaJson.json();
@@ -52,25 +56,32 @@ const Document = () => {
       }
    }
 
-
    return (
-      <div className='container my-5'>
-            {
-               temas.titulo === undefined ? '' :  
-               (temas.titulo.map((titulo,key) => (<Titulos titulo={titulo} key={key} />)))
-            }
-         <Form onSubmit={handleSubmit} className='my-5 row'>
-            <h5 className='text-center'>Ingrese lo que desea agregar</h5>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-               <Form.Label>Ingrese el parrafo</Form.Label>
-               <Form.Control type='text' rows={3} onChange={(e) => setText(e.target.value)} />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-               <Form.Label>Ingrese el codigo</Form.Label>
-               <CodeEditor setCode={setCode}></CodeEditor>
-            </Form.Group>
-            <Button type='submit' variant='dark'>Enviar</Button>
-         </Form>
+      <div className='row'>
+         <div id="navegador" className='col-2 my-5 mx-5 fixed-top navegacion'>
+               {
+                  temas.titulo === undefined ? '' : 
+                  (temas.titulo.map((titulo) => (<Navigate titulo={titulo} key={titulo.id} />)))
+               }
+         </div>
+         <div className='col-8 my-5 container'>
+               {
+                  temas.titulo === undefined ? '' :  
+                  (temas.titulo.map((titulo) => (<Titulos titulo={titulo} key={titulo.id} />)))
+               }
+            <Form onSubmit={handleSubmit} className='my-5 row p-3 rounded border border-dark'>
+               <h5 className='text-center'>Ingrese lo que desea agregar</h5>
+               <Form.Group className="my-3" controlId="exampleForm.ControlTextarea1">
+                  <input type='text' rows={3} className="background-form border border-dark text-light" placeholder='Ingrese el parrafo' onChange={(e) => setText(e.target.value)}></input>
+               </Form.Group>
+               <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                  <CodeEditor setCode={setCode}></CodeEditor>
+               </Form.Group>
+               <div className='text-center mb-3 mt-2'>
+                  <Button type='submit' variant='dark' className='w-25'>Enviar</Button>
+               </div>
+            </Form>
+         </div>
       </div>
    );
 };

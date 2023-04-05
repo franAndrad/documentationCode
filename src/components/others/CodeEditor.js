@@ -14,6 +14,8 @@ const CodeEditor = (props) => {
          value={props.code}
          extensions={[javascript({ jsx: true })]}
          onChange={onChange}
+         placeholder={"console.log('Hola Mundo!)"}
+         height='auto'
       />
    );
 };
