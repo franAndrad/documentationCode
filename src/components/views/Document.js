@@ -8,4 +8,4 @@ const Document = () => {
    );
 };
 
-export default Document;<p>Ver como administrar documentos</p>
+export default Document;

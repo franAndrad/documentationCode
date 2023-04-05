@@ -1,5 +1,4 @@
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Menu from './components/common/Menu';
 import Home from './components/views/Home';
