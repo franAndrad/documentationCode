@@ -303,7 +303,7 @@ PETICIONES:
 
 	GET(Obtener):
 		const respuestaJson = await fetch('link');
-		const respuesta = await respuesta.json();
+		const respuesta = await respuestaJson.json();
 		if(respuesta.status==='200'){//msj} //Con esto podemos mostrar un mensaje 
 		console.log(respuesta)
 
