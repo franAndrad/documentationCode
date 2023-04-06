@@ -4,7 +4,6 @@ import './Element.css'
 
 const Element = (props) => {
    return (
-      //    <li><a href={'#' + 'sub' + props.subtitulo.id.toString()} className='text-decoration-none text-light'>{props.subtitulo.nombre}</a></li>
          <li><Link to={'sub' + props.subtitulo.id.toString()} smooth={true} duration={300} className='text-decoration-none text-light lista btn'>{props.subtitulo.nombre}</Link></li>
    );
 };

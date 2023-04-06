@@ -154,7 +154,7 @@ const Document = () => {
 
    return (
       <div>
-         {temas.titulo === undefined ? '' : (temas.titulo.map((titulo) => (<h1 key={titulo.id} className='text-center titulo'>{titulo.nombre} </h1>)))}
+         {temas.titulo === undefined ? '' : (temas.titulo.map((titulo) => (<h1 key={titulo.id} className='text-center titulo display-5'>{titulo.nombre} </h1>)))}
          <div id="navegador" className='my-5 fixed-top mx-5 navegacion d-none d-lg-block'>
                {temas.titulo === undefined ? '' : (temas.titulo.map((titulo) => (<Navigate titulo={titulo} key={titulo.id} />)))}
          </div>
@@ -175,7 +175,7 @@ const Document = () => {
                }
                
                <div className='text-center mb-3 mt-2'>
-                  <Button type='submit' variant='dark' className='w-25'>{editar!== true ? "Enviar" : "Editar"}</Button>
+                  <button type='submit' variant='dark' className='w-25 btn btn-outline-info text-light'>{editar!== true ? "Enviar" : "Editar"}</button>
                </div>
             </Form>
          </div>
