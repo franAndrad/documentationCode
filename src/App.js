@@ -12,7 +12,7 @@ function App() {
         <Menu></Menu>
         <Routes>
           <Route extact path="/" element={<Home />} />
-          <Route extact path="/document" element={<Document />} />
+          <Route path="/document" element={<Document />} />
         </Routes>
       </BrowserRouter>
     </div>

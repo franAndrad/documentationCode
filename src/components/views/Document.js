@@ -3,17 +3,21 @@ import Titulos from './Docs/Titulos';
 import Navigate from './Docs/Navigate';
 import CodeEditor from '../others/CodeEditor';
 import { Form, Button } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import {useNavigate } from 'react-router-dom';
 
 import './Document.css';
 
 const Document = () => {
-
    const [temas , setTemas] = useState({});
    const [text, setText] = useState('');
    const [code, setCode] = useState('');
+   const [editar, setEditar] = useState(false);
+
+   const [idT, setIdT] = useState(0);
+   const [idS, setIdS] = useState(0);
+   const [idP, setIdP] = useState(0);
+
    const navegacion = useNavigate();
-   const titulo = 'React';
 
    useEffect(()=>{
       consultarTemas();
@@ -30,7 +34,8 @@ const Document = () => {
       if((text !== '') || (code !== '')){
          const nuevoParrafo = {
             linea: text,
-            code: code
+            code: code,
+            id: temas.titulo[0].subtitulo[0].parrafos[temas.titulo[0].subtitulo[0].parrafos.length - 1].id + 1
          };
          const nuevoObjeto = {...temas};
          nuevoObjeto.titulo[0].subtitulo[0].parrafos.push(nuevoParrafo);
@@ -40,7 +45,8 @@ const Document = () => {
                headers: { "Content-Type": "application/json", },
                body: JSON.stringify(nuevoObjeto),
             });
-            navegacion('/document')
+            setText('')
+            consultarTemas();
          } catch (error) {
             console.log(error);
          }
@@ -59,9 +65,44 @@ const Document = () => {
                headers: { "Content-Type": "application/json", },
                body: JSON.stringify(nuevoObjeto),
             });
-         navegacion('/document')
+         consultarTemas();
       } catch (error) {
          console.log(error);
+      }
+   }
+
+   const handleUpdate = (idTitulo, idSubtitulo, idParrafo) => {
+      setEditar(true);
+      setCode(temas.titulo[idTitulo - 1].subtitulo[idSubtitulo - 1].parrafos[idParrafo - 1].code);
+      setText(temas.titulo[idTitulo - 1].subtitulo[idSubtitulo - 1].parrafos[idParrafo - 1].linea); 
+      setIdT(idTitulo)    
+      setIdS(idSubtitulo)    
+      setIdP(idParrafo)    
+      
+   }
+
+   const handleUpdateParams = async (e) => {
+      e.preventDefault();
+      if((text!== '') || (code!== '') || (editar ==  true)){
+         const nuevoObjeto = {...temas};
+         nuevoObjeto.titulo[idT-1].subtitulo[idS-1].parrafos[idP-1].code = code;
+         nuevoObjeto.titulo[idT-1].subtitulo[idS-1].parrafos[idP-1].linea = text;
+         try {
+            const respuesta = await fetch("http://localhost:4000/tema/", { 
+               method: "PUT", 
+               headers: { "Content-Type": "application/json", },
+               body: JSON.stringify(nuevoObjeto),
+            });
+            setEditar(false);
+            setCode('');
+            setText('');
+            consultarTemas();
+         } catch (error) {
+            console.log(error);
+         }
+      }
+      else{
+         console.log('enviar alerta');
       }
    }
 
@@ -72,17 +113,17 @@ const Document = () => {
                {temas.titulo === undefined ? '' : (temas.titulo.map((titulo) => (<Navigate titulo={titulo} key={titulo.id} />)))}
          </div>
          <div className='my-5 documento'>
-            {temas.titulo === undefined ? '' : (temas.titulo.map((titulo) => (<Titulos titulo={titulo} key={titulo.id} idTitulo={titulo.id} consultarTemas={consultarTemas} handleDelete={handleDelete} />)))}
-            <Form onSubmit={handleSubmit} className='my-5 row p-3 rounded border border-dark'>
-               <h5 className='text-center'>Ingrese lo que desea agregar</h5>
-               <Form.Group className="my-3" controlId="exampleForm.ControlTextarea1">
-                  <input type='text' rows={3} className="background-form border border-dark text-light" placeholder='Ingrese el parrafo' onChange={(e) => setText(e.target.value)}></input>
+            {temas.titulo === undefined ? '' : (temas.titulo.map((titulo) => (<Titulos titulo={titulo} key={titulo.id} idTitulo={titulo.id} consultarTemas={consultarTemas} handleDelete={handleDelete} handleUpdate={handleUpdate} />)))}
+            <Form onSubmit={editar!== true ? handleSubmit : handleUpdateParams} className='my-5 row p-3 rounded border border-dark'>
+               <h5 className='text-center' id="form">Ingrese lo que desea agregar</h5>
+               <Form.Group className="my-3" controlId="text">
+                  <input type='text' value={text} rows={3} className="background-form border border-dark text-light" placeholder='Ingrese el parrafo' onChange={(e) => setText(e.target.value)}></input>
                </Form.Group>
-               <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                  <CodeEditor setCode={setCode}></CodeEditor>
+               <Form.Group className="mb-3" controlId="code">
+                  <CodeEditor setCode={setCode} code={code}></CodeEditor>
                </Form.Group>
                <div className='text-center mb-3 mt-2'>
-                  <Button type='submit' variant='dark' className='w-25'>Enviar</Button>
+                  <Button type='submit' variant='dark' className='w-25'>{editar!== true ? "Enviar" : "Editar"}</Button>
                </div>
             </Form>
          </div>
