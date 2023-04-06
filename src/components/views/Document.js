@@ -12,14 +12,13 @@ const Document = () => {
    const [temas , setTemas] = useState({});
    const [text, setText] = useState('');
    const [code, setCode] = useState('');
-   const [subtitulos, setSubtitulos] = useState([])
    const navegacion = useNavigate();
+   const titulo = 'React';
 
    useEffect(()=>{
       consultarTemas();
    },[])
 
-   
    const consultarTemas = async () => {
       const respuestaJson = await fetch('http://localhost:4000/tema');
       const respuesta = await respuestaJson.json();
@@ -57,14 +56,18 @@ const Document = () => {
    }
 
    return (
-      <div className='row'>
-         <div id="navegador" className='col-2 my-5 mx-5 fixed-top navegacion'>
+      <div>
+         {
+            temas.titulo === undefined ? '' :
+               (temas.titulo.map((titulo ,key) => (<h1 key={key} className='text-center titulo'>{titulo.nombre} </h1>)))
+         }
+         <div id="navegador" className='my-5 fixed-top mx-5 navegacion d-none d-lg-block'>
                {
                   temas.titulo === undefined ? '' : 
                   (temas.titulo.map((titulo) => (<Navigate titulo={titulo} key={titulo.id} />)))
                }
          </div>
-         <div className='col-8 my-5 container'>
+         <div className='my-5 documento'>
                {
                   temas.titulo === undefined ? '' :  
                   (temas.titulo.map((titulo) => (<Titulos titulo={titulo} key={titulo.id} />)))

@@ -11,6 +11,7 @@
     "@uiw/codemirror-theme-github": "^4.19.11",
     "@uiw/react-codemirror": "^4.19.11",
     "bootstrap": "^5.2.3",
+    "bootstrap-icons": "^1.10.4",
     "codemirror": "^6.0.1",
     "json-server": "^0.17.3",
     "localforage": "^1.10.0",

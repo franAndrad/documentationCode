@@ -7,7 +7,7 @@ import Document from './components/views/Document';
 
 function App() {
   return (
-    <div className='background text-light'>
+    <div className='text-light background pb-5'>
       <BrowserRouter>
         <Menu></Menu>
         <Routes>
