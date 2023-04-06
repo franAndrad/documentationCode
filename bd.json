@@ -10,7 +10,7 @@
             "nombre": "Instalacion",
             "parrafos": [
               {
-                "linea": "Esta funcion es para saludar en javascrypt, es la primera que realizamos en todos los lenguajes de programacion",
+                "linea": "Esta funcion es para saludar en javascrypt, es la primera que realizamos en todos los lenguajes de programacion, nicolas",
                 "code": "function saludar(nombre) {\n  console.log('Hola', nombre)\n}",
                 "id": 1
               },
@@ -52,7 +52,7 @@
             "nombre": "otro",
             "parrafos": [
               {
-                "linea": "Esta funcion es para saludar",
+                "linea": "Esta funcion es para saludar,",
                 "code": "function saludar(nombre) {\n  console.log('Hola', nombre)\n}",
                 "id": 1
               },
@@ -65,11 +65,6 @@
                 "linea": "La función bubbleSort toma un array como argumento y realiza el algoritmo de ordenamiento de burbuja en él. La primera línea obtiene la longitud del array y comienza un bucle para recorrer el array en orden inverso. Luego, dentro de este bucle, hay otro bucle que recorre el array de izquierda a derecha y compara los elementos adyacentes. Si el elemento de la izquierda es mayor que el de la derecha, se intercambian. Esto se repite hasta que todo el array está ordenado. Finalmente, la función devuelve el array ordenado.",
                 "code": "",
                 "id": 3
-              },
-              {
-                "linea": "Es importante tener en cuenta que el algoritmo de ordenamiento de burbuja no es muy eficiente y no se recomienda para arrays grandes. Hay algoritmos de ordenamiento más eficientes, como QuickSort o MergeSort, que son más adecuados para grandes conjuntos de datos. ",
-                "code": "",
-                "id": 4
               }
             ]
           }

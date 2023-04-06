@@ -45,7 +45,8 @@ const Document = () => {
                headers: { "Content-Type": "application/json", },
                body: JSON.stringify(nuevoObjeto),
             });
-            setText('')
+            setText('');
+            setCode('');
             consultarTemas();
          } catch (error) {
             console.log(error);
