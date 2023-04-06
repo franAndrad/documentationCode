@@ -1,4 +1,4 @@
-#Primer version donde solo se puede editar un documento
+# Primer version donde solo se puede editar un documento
 
 ## Herramienta
  [codemirror](https://www.npmjs.com/package/@uiw/react-codemirror) 
