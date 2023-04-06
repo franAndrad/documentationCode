@@ -2,54 +2,62 @@
   "tema": {
     "titulo": [
       {
+        "id":1,
         "nombre": "React",
         "subtitulo": [
           {
+            "id":1,
             "nombre": "Instalacion",
             "parrafos": [
               {
                 "linea": "Esta funcion es para saludar",
-                "code": "function saludar(nombre) {\n  console.log('Hola', nombre)\n}"
+                "code": "function saludar(nombre) {\n  console.log('Hola', nombre)\n}",
+                "id": 1
               },
               {
                 "linea": "Bubblesor es un algoritmo de ordenamiento simple. A continuación te proporciono un ejemplo de cómo implementar el algoritmo de ordenamiento de burbuja en JavaScript:",
-                "code": "function bubbleSort(arr) {\n  var len = arr.length;\n  for (var i = len-1; i>=0; i--){\n    for(var j = 1; j<=i; j++){\n      if(arr[j-1]>arr[j]){\n          var temp = arr[j-1];\n          arr[j-1] = arr[j];\n          arr[j] = temp;\n       }\n    }\n  }\n  return arr;\n}\n\n// Ejemplo de uso:\nvar myArray = [3, 6, 1, 8, 2, 10, 5];\nbubbleSort(myArray);\nconsole.log(myArray); // Resultado: [1, 2, 3, 5, 6, 8, 10]"
+                "code": "function bubbleSort(arr) {\n  var len = arr.length;\n  for (var i = len-1; i>=0; i--){\n    for(var j = 1; j<=i; j++){\n      if(arr[j-1]>arr[j]){\n          var temp = arr[j-1];\n          arr[j-1] = arr[j];\n          arr[j] = temp;\n       }\n    }\n  }\n  return arr;\n}\n\n// Ejemplo de uso:\nvar myArray = [3, 6, 1, 8, 2, 10, 5];\nbubbleSort(myArray);\nconsole.log(myArray); // Resultado: [1, 2, 3, 5, 6, 8, 10]",
+                "id": 2
               },
               {
                 "linea": "La función bubbleSort toma un array como argumento y realiza el algoritmo de ordenamiento de burbuja en él. La primera línea obtiene la longitud del array y comienza un bucle para recorrer el array en orden inverso. Luego, dentro de este bucle, hay otro bucle que recorre el array de izquierda a derecha y compara los elementos adyacentes. Si el elemento de la izquierda es mayor que el de la derecha, se intercambian. Esto se repite hasta que todo el array está ordenado. Finalmente, la función devuelve el array ordenado.",
-                "code": ""
+                "code": "",
+                "id": 3
               },
               {
                 "linea": "Es importante tener en cuenta que el algoritmo de ordenamiento de burbuja no es muy eficiente y no se recomienda para arrays grandes. Hay algoritmos de ordenamiento más eficientes, como QuickSort o MergeSort, que son más adecuados para grandes conjuntos de datos.",
-                "code": ""
+                "code": "",
+                "id": 4
               }
-            ],
-            "id":1
+            ]
           },
           {
+            "id":2,
             "nombre": "How",
             "parrafos": [
               {
                 "linea": "Esta funcion es para saludar",
-                "code": "function saludar(nombre) {\n  console.log('Hola', nombre)\n}"
+                "code": "function saludar(nombre) {\n  console.log('Hola', nombre)\n}",
+                "id": 1
               },
               {
                 "linea": "Bubblesor es un algoritmo de ordenamiento simple. A continuación te proporciono un ejemplo de cómo implementar el algoritmo de ordenamiento de burbuja en JavaScript:",
-                "code": "function bubbleSort(arr) {\n  var len = arr.length;\n  for (var i = len-1; i>=0; i--){\n    for(var j = 1; j<=i; j++){\n      if(arr[j-1]>arr[j]){\n          var temp = arr[j-1];\n          arr[j-1] = arr[j];\n          arr[j] = temp;\n       }\n    }\n  }\n  return arr;\n}\n\n// Ejemplo de uso:\nvar myArray = [3, 6, 1, 8, 2, 10, 5];\nbubbleSort(myArray);\nconsole.log(myArray); // Resultado: [1, 2, 3, 5, 6, 8, 10]"
+                "code": "function bubbleSort(arr) {\n  var len = arr.length;\n  for (var i = len-1; i>=0; i--){\n    for(var j = 1; j<=i; j++){\n      if(arr[j-1]>arr[j]){\n          var temp = arr[j-1];\n          arr[j-1] = arr[j];\n          arr[j] = temp;\n       }\n    }\n  }\n  return arr;\n}\n\n// Ejemplo de uso:\nvar myArray = [3, 6, 1, 8, 2, 10, 5];\nbubbleSort(myArray);\nconsole.log(myArray); // Resultado: [1, 2, 3, 5, 6, 8, 10]",
+                "id": 2
               },
               {
                 "linea": "La función bubbleSort toma un array como argumento y realiza el algoritmo de ordenamiento de burbuja en él. La primera línea obtiene la longitud del array y comienza un bucle para recorrer el array en orden inverso. Luego, dentro de este bucle, hay otro bucle que recorre el array de izquierda a derecha y compara los elementos adyacentes. Si el elemento de la izquierda es mayor que el de la derecha, se intercambian. Esto se repite hasta que todo el array está ordenado. Finalmente, la función devuelve el array ordenado.",
-                "code": ""
+                "code": "",
+                "id": 3
               },
               {
                 "linea": "Es importante tener en cuenta que el algoritmo de ordenamiento de burbuja no es muy eficiente y no se recomienda para arrays grandes. Hay algoritmos de ordenamiento más eficientes, como QuickSort o MergeSort, que son más adecuados para grandes conjuntos de datos.",
-                "code": ""
+                "code": "",
+                "id": 4
               }
-            ],
-            "id":2
+            ]
           }
-        ],
-        "id": 1
+        ]
       }
     ]
   }

@@ -5,7 +5,7 @@ const Titulos = (props) => {
    return (
       <div>
          {props.titulo.subtitulo.map((subtitulo) =>(
-            <SubTitulos subtitulo={subtitulo} key={subtitulo.id} />
+            <SubTitulos subtitulo={subtitulo} key={subtitulo.id} consultarTemas={props.consultarTemas} />
          ))}
       </div>
    );
