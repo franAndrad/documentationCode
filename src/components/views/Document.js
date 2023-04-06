@@ -4,6 +4,8 @@ import Navigate from './Docs/Navigate';
 import CodeEditor from '../others/CodeEditor';
 import { Form, Button } from 'react-bootstrap';
 import {useNavigate } from 'react-router-dom';
+import Options from './Select/OptionSub';
+import TituloSelect from './Select/TituloSelect';
 
 import './Document.css';
 
@@ -29,16 +31,18 @@ const Document = () => {
       setTemas(respuesta);
    }
 
+
+   // MODIFICAR!!!!! EL temmas.titulo[0] para que se modifique el titulo a escribir, analizar el mejor metodo para seleccionar titulos
    const handleSubmit = async (e) => {
       e.preventDefault();
       if((text !== '') || (code !== '')){
          const nuevoParrafo = {
             linea: text,
             code: code,
-            id: temas.titulo[0].subtitulo[0].parrafos[temas.titulo[0].subtitulo[0].parrafos.length - 1].id + 1
+            id: temas.titulo[0].subtitulo[idS - 1].parrafos[temas.titulo[0].subtitulo[idS - 1].parrafos.length - 1].id + 1
          };
          const nuevoObjeto = {...temas};
-         nuevoObjeto.titulo[0].subtitulo[0].parrafos.push(nuevoParrafo);
+         nuevoObjeto.titulo[0].subtitulo[idS - 1].parrafos.push(nuevoParrafo);
          try {
             const respuesta = await fetch("http://localhost:4000/tema/", { 
                method: "PUT", 
@@ -78,8 +82,7 @@ const Document = () => {
       setText(temas.titulo[idTitulo - 1].subtitulo[idSubtitulo - 1].parrafos[idParrafo - 1].linea); 
       setIdT(idTitulo)    
       setIdS(idSubtitulo)    
-      setIdP(idParrafo)    
-      
+      setIdP(idParrafo)     
    }
 
    const handleUpdateParams = async (e) => {
@@ -107,6 +110,11 @@ const Document = () => {
       }
    }
 
+   const updateIdSub = (id) =>{
+      let idInt = parseInt(id,10)
+      setIdS(idInt)
+   }
+
    return (
       <div>
          {temas.titulo === undefined ? '' : (temas.titulo.map((titulo) => (<h1 key={titulo.id} className='text-center titulo'>{titulo.nombre} </h1>)))}
@@ -114,13 +122,15 @@ const Document = () => {
                {temas.titulo === undefined ? '' : (temas.titulo.map((titulo) => (<Navigate titulo={titulo} key={titulo.id} />)))}
          </div>
          <div className='my-5 documento'>
-            {temas.titulo === undefined ? '' : (temas.titulo.map((titulo) => (<Titulos titulo={titulo} key={titulo.id} idTitulo={titulo.id} consultarTemas={consultarTemas} handleDelete={handleDelete} handleUpdate={handleUpdate} />)))}
+            {temas.titulo === undefined ? '' : (temas.titulo.map((titulo) => (<Titulos titulo={titulo} key={titulo.id} idTitulo={titulo.id} consultarTemas={consultarTemas} handleDelete={handleDelete} handleUpdate={handleUpdate}/>)))}
             <Form onSubmit={editar!== true ? handleSubmit : handleUpdateParams} className='my-5 row p-3 rounded border border-dark'>
                <h5 className='text-center' id="form">Ingrese lo que desea agregar</h5>
+               {temas.titulo === undefined ? '' : (temas.titulo.map((titulo) => (<TituloSelect titulo={titulo} key={titulo.id} idTitulo={titulo.id} consultarTemas={consultarTemas} updateIdSub={updateIdSub} idS={idS} />)))} 
+                  {/* <input type='text' value={text} rows={3} className="background-form border border-dark text-light" placeholder='Ingrese el parrafo' onChange={(e) => setText(e.target.value)}></input> */}
                <Form.Group className="my-3" controlId="text">
-                  <input type='text' value={text} rows={3} className="background-form border border-dark text-light" placeholder='Ingrese el parrafo' onChange={(e) => setText(e.target.value)}></input>
+                  <Form.Control type='text' value={text} rows={3} className="background-form border border-dark text-light" placeholder='Ingrese el parrafo' onChange={(e) => setText(e.target.value)}></Form.Control>
                </Form.Group>
-               <Form.Group className="mb-3" controlId="code">
+               <Form.Group className="my-3" controlId="code">
                   <CodeEditor setCode={setCode} code={code}></CodeEditor>
                </Form.Group>
                <div className='text-center mb-3 mt-2'>
