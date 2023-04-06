@@ -50,14 +50,29 @@ const Document = () => {
       }
    }
 
+   const handleDelete = async (idTitulo,idSubtitulo,idParrafo) => {
+      const nuevoObjeto = {...temas};
+      nuevoObjeto.titulo[idTitulo-1].subtitulo[idSubtitulo-1].parrafos = nuevoObjeto.titulo[idTitulo-1].subtitulo[idSubtitulo-1].parrafos.filter((parrafo) => parrafo.id !== idParrafo);
+      try {
+         const respuesta = await fetch("http://localhost:4000/tema/", { 
+               method: "PUT", 
+               headers: { "Content-Type": "application/json", },
+               body: JSON.stringify(nuevoObjeto),
+            });
+         navegacion('/document')
+      } catch (error) {
+         console.log(error);
+      }
+   }
+
    return (
       <div>
-         {temas.titulo === undefined ? '' : (temas.titulo.map((titulo ,key) => (<h1 key={key} className='text-center titulo'>{titulo.nombre} </h1>)))}
+         {temas.titulo === undefined ? '' : (temas.titulo.map((titulo) => (<h1 key={titulo.id} className='text-center titulo'>{titulo.nombre} </h1>)))}
          <div id="navegador" className='my-5 fixed-top mx-5 navegacion d-none d-lg-block'>
                {temas.titulo === undefined ? '' : (temas.titulo.map((titulo) => (<Navigate titulo={titulo} key={titulo.id} />)))}
          </div>
          <div className='my-5 documento'>
-            {temas.titulo === undefined ? '' : (temas.titulo.map((titulo) => (<Titulos titulo={titulo} key={titulo.id} consultarTemas={consultarTemas} />)))}
+            {temas.titulo === undefined ? '' : (temas.titulo.map((titulo) => (<Titulos titulo={titulo} key={titulo.id} idTitulo={titulo.id} consultarTemas={consultarTemas} handleDelete={handleDelete} />)))}
             <Form onSubmit={handleSubmit} className='my-5 row p-3 rounded border border-dark'>
                <h5 className='text-center'>Ingrese lo que desea agregar</h5>
                <Form.Group className="my-3" controlId="exampleForm.ControlTextarea1">
