@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Titulos from './Docs/Titulos';
+import SubTitulos from './Docs/SubTitulos';
 import Navigate from './Docs/Navigate';
 import CodeEditor from '../others/CodeEditor';
 import { Form } from 'react-bootstrap';
@@ -18,7 +18,7 @@ const Temas = () => {
    const [subtitulo, setSubtitulo] = useState('')
 
    const [titulo, setTitulo] = useState('')
-   const [subs,setSubs] = useState('')
+   const [subs,setSubs] = useState([])
 
    const [stateSelect, setStateSelect] = useState(true)
 
@@ -38,7 +38,6 @@ const Temas = () => {
       setTitulo(respuesta.titulo[idT-1].nombre)
       setSubs(respuesta.titulo[idT-1].subtitulo)
    }
-
 
    // MODIFICAR!!!!! EL temmas.titulo[0] para que se modifique el titulo a escribir, analizar el mejor metodo para seleccionar titulos
    const handleSubmit = async (e) => {
@@ -103,7 +102,7 @@ const Temas = () => {
       }
    }
 
-   const handleDelete = async (idTitulo,idSubtitulo,idParrafo) => {
+   const handleDelete = async (idSubtitulo,idParrafo) => {
       const nuevoObjeto = {...temas};
       nuevoObjeto.titulo[idT - 1].subtitulo[idSubtitulo - 1].parrafos = nuevoObjeto.titulo[idT - 1].subtitulo[idSubtitulo-1].parrafos.filter((parrafo) => parrafo.id !== idParrafo);
       try {
@@ -118,7 +117,7 @@ const Temas = () => {
       }
    }
 
-   const handleUpdate = (idTitulo, idSubtitulo, idParrafo) => {
+   const handleUpdate = ( idSubtitulo, idParrafo) => {
       setEditar(true);
       setCode(temas.titulo[idT - 1].subtitulo[idSubtitulo - 1].parrafos[idParrafo - 1].code);
       setText(temas.titulo[idT - 1].subtitulo[idSubtitulo - 1].parrafos[idParrafo - 1].linea); 
@@ -159,12 +158,12 @@ const Temas = () => {
  
    return (
       <div>
-         <h1 className='text-center titulo display-5'>{titulo}</h1>
+         <h1 className='text-center titulo display-5'>{titulo !== undefined ? titulo : ''}</h1>
          <div id="navegador" className='my-5 fixed-top mx-5 navegacion d-none d-lg-block'>
                {temas.titulo === undefined ? '' : (temas.titulo.map((titulo) => (<Navigate titulo={titulo} key={titulo.id} />)))}
          </div>
          <div className='my-5 documento'>
-            {temas.titulo === undefined ? '' : (temas.titulo.map((titulo) => (<Titulos titulo={titulo} key={titulo.id} idTitulo={titulo.id} consultarTemas={consultarTemas} handleDelete={handleDelete} handleUpdate={handleUpdate}/>)))}
+            {subs !== undefined ? subs.map((sub) => (<SubTitulos sub={sub} key={sub.id} idSub={sub.id} consultarTemas={consultarTemas} handleDelete={handleDelete} handleUpdate={handleUpdate}/>)):''}
             <Form onSubmit={editar!== true ? handleSubmit : handleUpdateParams} className='my-5 row p-3 rounded border border-dark'>
                <h5 className='text-center' id="form">Ingrese lo que desea agregar</h5>
                {(temas.titulo === undefined) ? '' : (temas.titulo.map((titulo) => (<TituloSelect titulo={titulo} key={titulo.id} idTitulo={titulo.id} consultarTemas={consultarTemas} updateIdSub={updateIdSub} idS={idS} stateEditar={editar} setSubtitulo={setSubtitulo} subtitulo={subtitulo} setStateSelect={setStateSelect} stateSelect={stateSelect} setCode={setCode} setText={setText}/>)))} 
