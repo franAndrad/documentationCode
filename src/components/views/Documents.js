@@ -18,7 +18,7 @@ const Documents = () => {
          <div>
             <h1>Temas</h1>
             <ul>
-               {temas.titulo === undefined ? '' : temas.titulo.map((tit) => (<Link to={`/documents/title/`+tit.id}><li key={tit.id}>{tit.nombre}</li></Link>))}
+               {temas.titulo === undefined ? '' : temas.titulo.map((tit,key) => (<Link to={`/documents/title/`+tit.id}><li key={tit.id} >{tit.nombre}</li></Link>))}
             </ul>
          </div>
       )

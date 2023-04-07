@@ -15,8 +15,7 @@ function App() {
           <Route extact path="/" element={<Home />} />
           <Route path="/documents" element={<Documents />} />
           <Route path="/documents/title/:id" element={<Temas />} />
-          <Route path="/*" element={<Documents />} />
-          
+          <Route path="/*" element={<Documents />} />   
         </Routes>
       </BrowserRouter>
     </div>

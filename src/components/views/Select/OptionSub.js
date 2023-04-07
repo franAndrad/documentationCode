@@ -2,7 +2,7 @@ import React from 'react';
 
 const OptionSubs = (props) => {
    return (
-      <option value={props.subtitulo.id} >{props.subtitulo.nombre}</option>
+      <option value={props.sub.id} >{props.sub.nombre}</option>
    );
 };
 

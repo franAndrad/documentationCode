@@ -4,7 +4,9 @@ import Navigate from './Docs/Navigate';
 import CodeEditor from '../others/CodeEditor';
 import { Form } from 'react-bootstrap';
 import { useParams} from 'react-router-dom';
-import TituloSelect from './Select/TituloSelect';
+import OptionSubs from './Select/OptionSub';
+import Element from './Docs/Element';
+import { Link } from 'react-scroll';
 
 import './Temas.css';
 
@@ -16,12 +18,9 @@ const Temas = () => {
    const [code, setCode] = useState('');
    const [editar, setEditar] = useState(false);
    const [subtitulo, setSubtitulo] = useState('')
-
    const [titulo, setTitulo] = useState('')
    const [subs,setSubs] = useState([])
-
    const [stateSelect, setStateSelect] = useState(true)
-
    const [idT, setIdT] = useState(idNumero);
    const [idS, setIdS] = useState(0);
    const [idP, setIdP] = useState(0);
@@ -42,7 +41,6 @@ const Temas = () => {
    // MODIFICAR!!!!! EL temmas.titulo[0] para que se modifique el titulo a escribir, analizar el mejor metodo para seleccionar titulos
    const handleSubmit = async (e) => {
       e.preventDefault();
-
 
       if(subtitulo !== ''){
          let idSub;
@@ -155,18 +153,47 @@ const Temas = () => {
       setIdS(idInt)
    }
 
+   const enviarDatos = (value) => {
+      setSubtitulo(value);
+      updateIdSub(subs.length)
+   }
+
+   const enviarSeleccion = (value) => {
+      updateIdSub(value);
+      setSubtitulo('');
+   }
+
+   const select = () => {
+      setStateSelect(!stateSelect)
+      setCode('');
+      setText('');
+   }
+
  
    return (
       <div>
          <h1 className='text-center titulo display-5'>{titulo !== undefined ? titulo : ''}</h1>
          <div id="navegador" className='my-5 fixed-top mx-5 navegacion d-none d-lg-block'>
-               {temas.titulo === undefined ? '' : (temas.titulo.map((titulo) => (<Navigate titulo={titulo} key={titulo.id} />)))}
+            <ol>
+               {subs.map((sub) => (<Element sub={sub} key={sub.id} />))}
+            </ol>
+            <Link to={'form'} smooth={true} duration={300} className='text-decoration-none text-light mx-4 btn btn-outline-info'>Agregar</Link>
+               {/* {subs === undefined ? '' : (subs.map((sub) => (<Navigate sub={sub} key={sub.id} />)))} */}
          </div>
          <div className='my-5 documento'>
             {subs !== undefined ? subs.map((sub) => (<SubTitulos sub={sub} key={sub.id} idSub={sub.id} consultarTemas={consultarTemas} handleDelete={handleDelete} handleUpdate={handleUpdate}/>)):''}
             <Form onSubmit={editar!== true ? handleSubmit : handleUpdateParams} className='my-5 row p-3 rounded border border-dark'>
                <h5 className='text-center' id="form">Ingrese lo que desea agregar</h5>
-               {(temas.titulo === undefined) ? '' : (temas.titulo.map((titulo) => (<TituloSelect titulo={titulo} key={titulo.id} idTitulo={titulo.id} consultarTemas={consultarTemas} updateIdSub={updateIdSub} idS={idS} stateEditar={editar} setSubtitulo={setSubtitulo} subtitulo={subtitulo} setStateSelect={setStateSelect} stateSelect={stateSelect} setCode={setCode} setText={setText}/>)))} 
+               <Form.Group className="my-3 d-flex" controlId="subtitulo">
+                  {stateSelect === true ?
+                     <Form.Select className='border border-dark options' onChange={(e) => enviarSeleccion(e.target.value)} value={idS !== '' ? idS : '0'}>
+                        <option value='0'>Seleccione el subtitulo o presione el boton crear para generar uno nuevo</option>
+                        {subs.map((sub) => (<OptionSubs sub={sub} key={sub.id} />))}
+                     </Form.Select>
+                     : <Form.Control type='text' value={subtitulo} rows={3} className="background-form border border-dark text-light" placeholder='Crear subtitulo o seleccione existente en el boton derecho' onChange={(e) => enviarDatos(e.target.value)}></Form.Control>
+                  }
+                  <button className='btn' onClick={() => {select() }}>{stateSelect === true ? 'Crear' : 'Seleccione'}</button>
+               </Form.Group > 
                {stateSelect !== false ?
                   <Form.Group className="my-3" controlId="text">
                      <Form.Control type='text' value={text} rows={3}  className="background-form border border-dark text-light" placeholder='Ingrese el parrafo' onChange={(e) => setText(e.target.value)}></Form.Control>
@@ -177,7 +204,6 @@ const Temas = () => {
                      <CodeEditor setCode={setCode} code={code}></CodeEditor>
                   </Form.Group>: ''
                }
-               
                <div className='text-center mb-3 mt-2'>
                   <button type='submit' variant='dark' className='w-25 btn btn-outline-info text-light'>{editar!== true ? "Enviar" : "Editar"}</button>
                </div>
