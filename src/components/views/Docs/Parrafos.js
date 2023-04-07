@@ -18,23 +18,28 @@ const Parrafos = (props) => {
           ""
         )}
       </div>
-      <div className="d-flex col-12 col-sm-1- col-lg-1 justify-content-around">
-        <button
-          className="btn button"
-          onClick={() => props.handleDelete(props.idSub, props.parrafos.id)}
-        >
-          <i className="bi bi-trash3-fill"></i>
-        </button>
-        <Link
-          to="form"
-          smooth={true}
-          duration={300}
-          className="btn button"
-          onClick={() => props.handleUpdate(props.idSub, props.parrafos.id)}
-        >
-          <i className="bi bi-pencil-square"></i>
-        </Link>
-      </div>
+      {props.admin === true ? (
+        <div className="d-flex col-12 col-sm-1- col-lg-1 justify-content-around">
+          <button
+            className="btn button"
+            onClick={() => props.handleDelete(props.idSub, props.parrafos.id)}
+          >
+            <i className="bi bi-trash3-fill"></i>
+          </button>
+          <Link
+            to="form"
+            smooth={true}
+            duration={300}
+            className="btn button"
+            onClick={() => props.handleUpdate(props.idSub, props.parrafos.id)}
+          >
+            <i className="bi bi-pencil-square"></i>
+          </Link>
+        </div>
+      ) : (
+        ""
+      )}
+      {props.admin === true ? <hr className="my-3" /> : ""}
     </div>
   );
 };

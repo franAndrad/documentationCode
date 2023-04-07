@@ -19,10 +19,12 @@ const Temas = () => {
   const [subtitulo, setSubtitulo] = useState("");
   const [titulo, setTitulo] = useState("");
   const [subs, setSubs] = useState([]);
+  const [nombreSubtilo,setNombreSubtitulo] = useState('');
   const [stateSelect, setStateSelect] = useState(true);
   const [idT, setIdT] = useState(idNumero);
   const [idS, setIdS] = useState(0);
   const [idP, setIdP] = useState(0);
+  const [admin, setAdmin] = useState(false);
 
   useEffect(() => {
     consultarTemas();
@@ -123,6 +125,25 @@ const Temas = () => {
     }
   };
 
+    const handleDeleteAllContentSub = async (idParrafo) => {
+       const nuevoObjeto = { ...temas };
+    nuevoObjeto.titulo[idT - 1].subtitulo =
+      nuevoObjeto.titulo[idT - 1].parrafos.filter(
+        (parrafo) => parrafo.id !== idParrafo
+      );
+      console.log(nuevoObjeto)
+   //  try {
+   //    const respuesta = await fetch("http://localhost:4000/tema/", {
+   //      method: "PUT",
+   //      headers: { "Content-Type": "application/json" },
+   //      body: JSON.stringify(nuevoObjeto),
+   //    });
+   //    consultarTemas();
+   //  } catch (error) {
+   //    console.log(error);
+   //  }
+    };
+
   const handleUpdate = (idSubtitulo, idParrafo) => {
     setEditar(true);
     setCode(
@@ -136,6 +157,8 @@ const Temas = () => {
     setIdS(idSubtitulo);
     setIdP(idParrafo);
   };
+
+
 
   const handleUpdateParams = async (e) => {
     e.preventDefault();
@@ -184,6 +207,7 @@ const Temas = () => {
     setText("");
   };
 
+
   return (
     <div>
       <h1 className="text-center titulo display-5">
@@ -198,15 +222,18 @@ const Temas = () => {
             <Element sub={sub} key={sub.id} />
           ))}
         </ol>
-        <Link
-          to={"form"}
-          smooth={true}
-          duration={300}
-          className="text-decoration-none text-light mx-4 btn btn-outline-info"
-        >
-          Agregar
-        </Link>
-        {/* {subs === undefined ? '' : (subs.map((sub) => (<Navigate sub={sub} key={sub.id} />)))} */}
+        {admin === true ? (
+          <Link
+            to={"form"}
+            smooth={true}
+            duration={300}
+            className="text-decoration-none text-light mx-4 btn btn-outline-info"
+          >
+            Agregar
+          </Link>
+        ) : (
+          ""
+        )}
       </div>
       <div className="my-5 documento">
         {subs !== undefined
@@ -215,84 +242,90 @@ const Temas = () => {
                 sub={sub}
                 key={sub.id}
                 idSub={sub.id}
+                admin={admin}
                 consultarTemas={consultarTemas}
                 handleDelete={handleDelete}
                 handleUpdate={handleUpdate}
+                handleDeleteAllContentSub={handleDeleteAllContentSub}
               />
             ))
           : ""}
-        <Form
-          onSubmit={editar !== true ? handleSubmit : handleUpdateParams}
-          className="my-5 row p-3 rounded border border-dark"
-        >
-          <h5 className="text-center" id="form">
-            Ingrese lo que desea agregar
-          </h5>
-          <Form.Group className="my-3 d-flex" controlId="subtitulo">
-            {stateSelect === true ? (
-              <Form.Select
-                className="border border-dark options"
-                onChange={(e) => enviarSeleccion(e.target.value)}
-                value={idS !== "" ? idS : "0"}
+        {admin === true ? (
+          <Form
+            onSubmit={editar !== true ? handleSubmit : handleUpdateParams}
+            className="my-5 row p-3 rounded border border-dark"
+          >
+            <h5 className="text-center" id="form">
+              Ingrese lo que desea agregar
+            </h5>
+            <Form.Group className="my-3 d-flex" controlId="subtitulo">
+              {stateSelect === true ? (
+                <Form.Select
+                  className="border border-dark options"
+                  onChange={(e) => enviarSeleccion(e.target.value)}
+                  value={idS !== "" ? idS : "0"}
+                >
+                  <option value="0">
+                    Seleccione el subtitulo o presione el boton crear para
+                    generar uno nuevo
+                  </option>
+                  {subs.map((sub) => (
+                    <OptionSubs sub={sub} key={sub.id} />
+                  ))}
+                </Form.Select>
+              ) : (
+                <Form.Control
+                  type="text"
+                  value={subtitulo}
+                  rows={3}
+                  className="background-form border border-dark text-light"
+                  placeholder="Crear subtitulo o seleccione existente en el boton derecho"
+                  onChange={(e) => enviarDatos(e.target.value)}
+                ></Form.Control>
+              )}
+              <button
+                className="btn"
+                onClick={() => {
+                  select();
+                }}
               >
-                <option value="0">
-                  Seleccione el subtitulo o presione el boton crear para generar
-                  uno nuevo
-                </option>
-                {subs.map((sub) => (
-                  <OptionSubs sub={sub} key={sub.id} />
-                ))}
-              </Form.Select>
+                {stateSelect === true ? "Crear" : "Seleccione"}
+              </button>
+            </Form.Group>
+            {stateSelect !== false ? (
+              <Form.Group className="my-3" controlId="text">
+                <Form.Control
+                  type="text"
+                  value={text}
+                  rows={3}
+                  className="background-form border border-dark text-light"
+                  placeholder="Ingrese el parrafo"
+                  onChange={(e) => setText(e.target.value)}
+                ></Form.Control>
+              </Form.Group>
             ) : (
-              <Form.Control
-                type="text"
-                value={subtitulo}
-                rows={3}
-                className="background-form border border-dark text-light"
-                placeholder="Crear subtitulo o seleccione existente en el boton derecho"
-                onChange={(e) => enviarDatos(e.target.value)}
-              ></Form.Control>
+              ""
             )}
-            <button
-              className="btn"
-              onClick={() => {
-                select();
-              }}
-            >
-              {stateSelect === true ? "Crear" : "Seleccione"}
-            </button>
-          </Form.Group>
-          {stateSelect !== false ? (
-            <Form.Group className="my-3" controlId="text">
-              <Form.Control
-                type="text"
-                value={text}
-                rows={3}
-                className="background-form border border-dark text-light"
-                placeholder="Ingrese el parrafo"
-                onChange={(e) => setText(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
-          ) : (
-            ""
-          )}
-          {stateSelect !== false ? (
-            <Form.Group className="my-3" controlId="code">
-              <CodeEditor setCode={setCode} code={code}></CodeEditor>
-            </Form.Group>
-          ) : (
-            ""
-          )}
-          <div className="text-center mb-3 mt-2">
-            <button
-              type="submit"
-              variant="dark"
-              className="w-25 btn btn-outline-info text-light"
-            >
-              {editar !== true ? "Enviar" : "Editar"}
-            </button>
-          </div>
-        </Form>
+            {stateSelect !== false ? (
+              <Form.Group className="my-3" controlId="code">
+                <CodeEditor setCode={setCode} code={code}></CodeEditor>
+              </Form.Group>
+            ) : (
+              ""
+            )}
+            <div className="text-center mb-3 mt-2">
+              <button
+                type="submit"
+                variant="dark"
+                className="w-25 btn btn-outline-info text-light"
+              >
+                {editar !== true ? "Enviar" : "Editar"}
+              </button>
+            </div>
+          </Form>
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );
