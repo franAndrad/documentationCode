@@ -9,7 +9,7 @@ const Menu = () => {
   return (
     <Navbar
       expand="lg"
-      className="menu navbar navbar-expand-lg border-bottom border-info"
+      className="menu border-bottom border-info"
       variant="dark"
     >
       <Container>
