@@ -12,10 +12,12 @@ const SubTitulos = (props) => {
           </h3>
         </div>
         {props.admin === true ? (
-          <div className="mb-2">
+          <div className="mt-5 mb-3">
             <button
               className="btn button pb-0"
-              onClick={() => props.handleDelete(props.idSub, props.parrafos.id)}
+              onClick={() =>
+                props.handleDeleteAllContentSub(props.idSub)
+              }
             >
               <i className="bi bi-trash3-fill"></i>
             </button>

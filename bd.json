@@ -67,22 +67,6 @@
                 "id": 2
               }
             ]
-          },
-          {
-            "id": 4,
-            "nombre": "Herrmientas",
-            "parrafos": [
-              {
-                "linea": "aqui van las herramientas",
-                "code": "",
-                "id": 2
-              }
-            ]
-          },
-          {
-            "id": 5,
-            "nombre": "Giron",
-            "parrafos": []
           }
         ]
       }

@@ -24,7 +24,7 @@ const Temas = () => {
   const [idT, setIdT] = useState(idNumero);
   const [idS, setIdS] = useState(0);
   const [idP, setIdP] = useState(0);
-  const [admin, setAdmin] = useState(false);
+  const [admin, setAdmin] = useState(true);
 
   useEffect(() => {
     consultarTemas();
@@ -125,23 +125,22 @@ const Temas = () => {
     }
   };
 
-    const handleDeleteAllContentSub = async (idParrafo) => {
-       const nuevoObjeto = { ...temas };
-    nuevoObjeto.titulo[idT - 1].subtitulo =
-      nuevoObjeto.titulo[idT - 1].parrafos.filter(
-        (parrafo) => parrafo.id !== idParrafo
-      );
-      console.log(nuevoObjeto)
-   //  try {
-   //    const respuesta = await fetch("http://localhost:4000/tema/", {
-   //      method: "PUT",
-   //      headers: { "Content-Type": "application/json" },
-   //      body: JSON.stringify(nuevoObjeto),
-   //    });
-   //    consultarTemas();
-   //  } catch (error) {
-   //    console.log(error);
-   //  }
+    const handleDeleteAllContentSub = async (idSub) => {
+      const nuevoObjeto = { ...temas };
+       nuevoObjeto.titulo[idT-1].subtitulo =
+         nuevoObjeto.titulo[idT - 1].subtitulo.filter(
+           (parrafo) => parrafo.id !== idSub
+         );
+       try {
+         const respuesta = await fetch("http://localhost:4000/tema/", {
+           method: "PUT",
+           headers: { "Content-Type": "application/json" },
+           body: JSON.stringify(nuevoObjeto),
+         });
+         consultarTemas();
+       } catch (error) {
+         console.log(error);
+       }
     };
 
   const handleUpdate = (idSubtitulo, idParrafo) => {
@@ -157,8 +156,6 @@ const Temas = () => {
     setIdS(idSubtitulo);
     setIdP(idParrafo);
   };
-
-
 
   const handleUpdateParams = async (e) => {
     e.preventDefault();
