@@ -5,7 +5,6 @@ import { Link, animateScroll as scroll } from "react-scroll";
 const Navigate = (props) => {
    return (
       <div>
-
       <ol>
          {
             props.titulo.subtitulo.map((sub)=>(

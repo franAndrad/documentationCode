@@ -3,7 +3,8 @@ import './App.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Menu from './components/common/Menu';
 import Home from './components/views/Home';
-import Document from './components/views/Document';
+import Documents from './components/views/Documents';
+import Temas from './components/views/Temas';
 
 function App() {
   return (
@@ -12,7 +13,8 @@ function App() {
         <Menu></Menu>
         <Routes>
           <Route extact path="/" element={<Home />} />
-          <Route path="/document" element={<Document />} />
+          <Route path="/documents" element={<Documents />} />
+          <Route path="/documents/title/:id" element={<Temas />} />
         </Routes>
       </BrowserRouter>
     </div>

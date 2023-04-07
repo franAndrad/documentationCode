@@ -14,7 +14,7 @@ const Menu = () => {
             <Navbar.Collapse id="basic-navbar-nav">
                <Nav className="ms-auto me-0">
                   <Nav.Link as={Link} end to='/'> <div className='text-light'>Home</div></Nav.Link>
-                  <Nav.Link as={Link} end to='/document'><div className='text-light'>Document</div></Nav.Link>
+                  <Nav.Link as={Link} end to='/documents'><div className='text-light'>Document</div></Nav.Link>
                </Nav>
             </Navbar.Collapse>
          </Container>

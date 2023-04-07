@@ -2,15 +2,14 @@ import React, { useEffect, useState } from 'react';
 import Titulos from './Docs/Titulos';
 import Navigate from './Docs/Navigate';
 import CodeEditor from '../others/CodeEditor';
-import { Form, Button } from 'react-bootstrap';
-import {useNavigate } from 'react-router-dom';
-import Options from './Select/OptionSub';
+import { Form } from 'react-bootstrap';
+import { useParams} from 'react-router-dom';
 import TituloSelect from './Select/TituloSelect';
 
-import './Document.css';
-import { set } from 'lodash';
+import './Temas.css';
 
-const Document = () => {
+const Temas = () => {
+   const { id } = useParams();
    const [temas , setTemas] = useState({});
    const [text, setText] = useState('');
    const [code, setCode] = useState('');
@@ -18,15 +17,14 @@ const Document = () => {
    const [subtitulo, setSubtitulo] = useState('')
    const [stateSelect, setStateSelect] = useState(true)
 
-   const [idT, setIdT] = useState(0);
-   const [idS, setIdS] = useState(0);
-   const [idP, setIdP] = useState(0);
-
-   const navegacion = useNavigate();
+   const [idT, setIdT] = useState(parseInt(id));
+   const [idS, setIdS] = useState();
+   const [idP, setIdP] = useState();
 
    useEffect(()=>{
       consultarTemas();
    },[])
+ 
 
    const consultarTemas = async () => {
       const respuestaJson = await fetch('http://localhost:4000/tema');
@@ -41,19 +39,19 @@ const Document = () => {
 
 
       if(subtitulo !== ''){
-         let id;
-         if (temas.titulo[0].subtitulo.length === 0) {
-            id = 1;
+         let idSub;
+         if (temas.titulo[idT-1].subtitulo.length === 0) {
+            idSub = 1;
          } else {
-            id = temas.titulo[0].subtitulo[temas.titulo[0].subtitulo.length - 1].id + 1
+            idSub = temas.titulo[idT - 1].subtitulo[temas.titulo[idT - 1].subtitulo.length - 1].id + 1
          }
          const nuevoSubtitulo = {
-            id: id,
+            id: idSub,
             nombre: subtitulo,
             parrafos:[]
          };
          const nuevoObjeto = { ...temas };
-         nuevoObjeto.titulo[0].subtitulo.push(nuevoSubtitulo);
+         nuevoObjeto.titulo[idT-1].subtitulo.push(nuevoSubtitulo);
          console.log(nuevoObjeto)
          try {
             const respuesta = await fetch("http://localhost:4000/tema/", {
@@ -70,19 +68,19 @@ const Document = () => {
             console.log(error);
          }
       }else if((text !== '') || (code !== '')){
-         let id;
-         if (temas.titulo[0].subtitulo[idS - 1].parrafos.length === 0){
-            id = 1;
+         let idPar;
+         if (temas.titulo[idT-1].subtitulo[idS - 1].parrafos.length === 0){
+            idPar = 1;
          } else {
-            id = temas.titulo[0].subtitulo[idS - 1].parrafos[temas.titulo[0].subtitulo[idS - 1].parrafos.length - 1].id + 1
+            idPar = temas.titulo[idT - 1].subtitulo[idS - 1].parrafos[temas.titulo[idT - 1].subtitulo[idS - 1].parrafos.length - 1].id + 1
          }
          const nuevoParrafo = {
             linea: text,
             code: code,
-            id: id
+            id: idPar
          };
          const nuevoObjeto = {...temas};
-         nuevoObjeto.titulo[0].subtitulo[idS - 1].parrafos.push(nuevoParrafo);
+         nuevoObjeto.titulo[idT - 1].subtitulo[idS - 1].parrafos.push(nuevoParrafo);
          try {
             const respuesta = await fetch("http://localhost:4000/tema/", { 
                method: "PUT", 
@@ -100,7 +98,7 @@ const Document = () => {
 
    const handleDelete = async (idTitulo,idSubtitulo,idParrafo) => {
       const nuevoObjeto = {...temas};
-      nuevoObjeto.titulo[idTitulo-1].subtitulo[idSubtitulo-1].parrafos = nuevoObjeto.titulo[idTitulo-1].subtitulo[idSubtitulo-1].parrafos.filter((parrafo) => parrafo.id !== idParrafo);
+      nuevoObjeto.titulo[idT - 1].subtitulo[idSubtitulo - 1].parrafos = nuevoObjeto.titulo[idT - 1].subtitulo[idSubtitulo-1].parrafos.filter((parrafo) => parrafo.id !== idParrafo);
       try {
          const respuesta = await fetch("http://localhost:4000/tema/", { 
                method: "PUT", 
@@ -115,9 +113,8 @@ const Document = () => {
 
    const handleUpdate = (idTitulo, idSubtitulo, idParrafo) => {
       setEditar(true);
-      setCode(temas.titulo[idTitulo - 1].subtitulo[idSubtitulo - 1].parrafos[idParrafo - 1].code);
-      setText(temas.titulo[idTitulo - 1].subtitulo[idSubtitulo - 1].parrafos[idParrafo - 1].linea); 
-      setIdT(idTitulo)    
+      setCode(temas.titulo[idT - 1].subtitulo[idSubtitulo - 1].parrafos[idParrafo - 1].code);
+      setText(temas.titulo[idT - 1].subtitulo[idSubtitulo - 1].parrafos[idParrafo - 1].linea); 
       setIdS(idSubtitulo)    
       setIdP(idParrafo)     
    }
@@ -183,4 +180,4 @@ const Document = () => {
    );
 };
 
-export default Document;
+export default Temas;
