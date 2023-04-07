@@ -24,7 +24,9 @@ const Temas = () => {
   const [idT, setIdT] = useState(idNumero);
   const [idS, setIdS] = useState(0);
   const [idP, setIdP] = useState(0);
-  const [admin, setAdmin] = useState(true);
+
+  //Modificar cuando se tenga un administrador
+  const [admin, setAdmin] = useState(false);
 
   useEffect(() => {
     consultarTemas();
@@ -51,6 +53,7 @@ const Temas = () => {
             temas.titulo[idT - 1].subtitulo.length - 1
           ].id + 1;
       }
+
       const nuevoSubtitulo = {
         id: idSub,
         nombre: subtitulo,
@@ -212,7 +215,7 @@ const Temas = () => {
       </h1>
       <div
         id="navegador"
-        className="my-5 fixed-top mx-5 navegacion d-none d-lg-block"
+        className="fixed-top mx-5 navegacion d-none d-lg-block"
       >
         <ol>
           {subs.map((sub) => (

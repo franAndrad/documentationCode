@@ -1,0 +1,11 @@
+.background{
+   background-color: black;
+}
+.documento{
+   margin-left: 40px;
+   margin-right: 40px;
+   z-index: 1;
+}
+.nombre{
+   list-style: none;
+}

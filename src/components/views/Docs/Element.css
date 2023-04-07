@@ -3,3 +3,9 @@
    padding-top: 0px;
    padding-bottom: 4px;
 }
+.action:selection{
+   border: none;
+}
+.action:active{
+   border: none;
+}

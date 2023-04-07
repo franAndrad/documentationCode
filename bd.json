@@ -1,9 +1,11 @@
 {
   "tema": {
+    
     "titulo": [
       {
         "id": 1,
         "nombre": "React",
+        "descripcion":"Aqui va una descripcion del tema",
         "subtitulo": [
           {
             "id": 1,
