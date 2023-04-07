@@ -7,25 +7,28 @@ import "./Menu.css";
 
 const Menu = () => {
   return (
-    <nav className="menu navbar navbar-expand-lg text-light border-info">
+    <Navbar
+      expand="lg"
+      className="menu navbar navbar-expand-lg border-bottom border-info"
+      variant="dark"
+    >
       <Container>
-        <Navbar.Brand as={Link} end to="/" className="">
-          <div className="text-light">DocNowledge</div>
+        <Navbar.Brand as={Link} end to="/">
+          DocNowledge
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto me-0">
             <Nav.Link as={Link} end to="/">
-              {" "}
-              <div className="text-light">Home</div>
+              Home
             </Nav.Link>
             <Nav.Link as={Link} end to="/documents">
-              <div className="text-light">Document</div>
+              Document
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
-    </nav>
+    </Navbar>
   );
 };
 
