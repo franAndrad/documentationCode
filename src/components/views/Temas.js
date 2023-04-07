@@ -10,16 +10,21 @@ import './Temas.css';
 
 const Temas = () => {
    const { id } = useParams();
+   const idNumero = parseInt(id);
    const [temas , setTemas] = useState({});
    const [text, setText] = useState('');
    const [code, setCode] = useState('');
    const [editar, setEditar] = useState(false);
    const [subtitulo, setSubtitulo] = useState('')
+
+   const [titulo, setTitulo] = useState('')
+   const [subs,setSubs] = useState('')
+
    const [stateSelect, setStateSelect] = useState(true)
 
-   const [idT, setIdT] = useState(parseInt(id));
-   const [idS, setIdS] = useState();
-   const [idP, setIdP] = useState();
+   const [idT, setIdT] = useState(idNumero);
+   const [idS, setIdS] = useState(0);
+   const [idP, setIdP] = useState(0);
 
    useEffect(()=>{
       consultarTemas();
@@ -30,6 +35,8 @@ const Temas = () => {
       const respuestaJson = await fetch('http://localhost:4000/tema');
       const respuesta = await respuestaJson.json();
       setTemas(respuesta);
+      setTitulo(respuesta.titulo[idT-1].nombre)
+      setSubs(respuesta.titulo[idT-1].subtitulo)
    }
 
 
@@ -149,9 +156,10 @@ const Temas = () => {
       setIdS(idInt)
    }
 
+ 
    return (
       <div>
-         {temas.titulo === undefined ? '' : (temas.titulo.map((titulo) => (<h1 key={titulo.id} className='text-center titulo display-5'>{titulo.nombre} </h1>)))}
+         <h1 className='text-center titulo display-5'>{titulo}</h1>
          <div id="navegador" className='my-5 fixed-top mx-5 navegacion d-none d-lg-block'>
                {temas.titulo === undefined ? '' : (temas.titulo.map((titulo) => (<Navigate titulo={titulo} key={titulo.id} />)))}
          </div>
