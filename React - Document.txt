@@ -14,7 +14,7 @@ INSTALACION
 
 INICIALIZACION
 3 - Para iniciar el proyecto en la terminal ingresamos $npm start
-4 - En la carpeta node_modules se descargan las dependencias(librerias) por lo que nos aseguramos que en gitignore, de esta forma no subimos la carpeta. Si ya estaria cargada en un repositorio como github al descargarlo se puede reconstruir debido a que la informacion esta en el package.json(dependencias, depuracion, testing, informacion) y lo hacemos con el comando $npm install
+4 - En la carpeta node_modules se descargan las dependencias(librerias) por lo que nos aseguramos que este en gitignore, de esta forma no subimos la carpeta. Si ya estaria cargada en un repositorio como github al descargarlo se puede reconstruir debido a que la informacion esta en el package.json(dependencias, depuracion, testing, informacion) y lo hacemos con el comando $npm install
 
 Nota: en package.json en la parte de Debug, el $npm eject publica los archivos ocultos y no se puede deshacer el cambio
 

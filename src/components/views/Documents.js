@@ -17,9 +17,9 @@ const Documents = () => {
     setTemas(respuesta);
   };
   return (
-    <div className="background documento">
+    <div className="documento">
       <h1 className="text-center my-5">Temas</h1>
-      <ul>
+      <ul >
         {temas.titulo === undefined
           ? ""
           : temas.titulo.map((tit, key) => (

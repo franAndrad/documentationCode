@@ -1,11 +1,12 @@
-.background{
-   background-color: black;
+.documento {
+  margin-left: 40px;
+  margin-right: 40px;
+  height: 100%;
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+  min-height: 91vh;
 }
-.documento{
-   margin-left: 40px;
-   margin-right: 40px;
-   z-index: 1;
-}
-.nombre{
-   list-style: none;
+.nombre {
+  list-style: none;
 }
